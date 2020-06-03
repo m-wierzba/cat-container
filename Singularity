@@ -9,7 +9,7 @@ From:neurodebian:latest
 
 %post
     apt-get update
-    apt-get -y install wget unzip libxext6 libxt6
+    apt-get -y install wget unzip libxext6 libxt6 moreutils
 
     # download software
     MCRURL="https://ssd.mathworks.com/supportfiles/downloads/R2017b/deployment_files/R2017b/installers/glnxa64/MCR_R2017b_glnxa64_installer.zip"
