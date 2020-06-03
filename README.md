@@ -18,25 +18,25 @@ In principle this container allows you to perform the very same types of analysi
 
 Run the CAT analysis with the following command:
 
-`singularity run --containall -B <working directory>:/mnt <container> <batch file> <arguments>`
+`singularity run --cleanenv <container> <batch file> <arguments>`
 
 ## Examples:
 
 CAT12 segmentation batch:
 
-`singularity run --containall -B /home/user/workdir:/mnt container.simg cat_standalone_segment.txt T1.nii`
+`singularity run --cleanenv container.simg cat_standalone_segment.txt T1.nii`
 
 CAT12 simple processing batch:
 
-`singularity run --containall -B /home/user/workdir:/mnt container.simg cat_standalone_simple.txt T1.nii`
+`singularity run --cleanenv container.simg cat_standalone_simple.txt T1.nii`
 
 CAT12 resample & smooth batch:
 
-`singularity run --containall -B /home/user/workdir:/mnt container.simg cat_standalone_resample.txt "12" "1" lh.thickness.T1`
+`singularity run --cleanenv container.simg cat_standalone_resample.txt "12" "1" lh.thickness.T1`
 
 CAT12 volume smoothing batch:
 
-`singularity run --containall -B /home/user/workdir:/mnt container.simg cat_standalone_smooth.txt "[6 6 6]" "'s6'" T1.nii`
+`singularity run --cleanenv container.simg cat_standalone_smooth.txt "[6 6 6]" "'s6'" T1.nii`
 
 
 ## Known issues:
