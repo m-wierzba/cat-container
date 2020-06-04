@@ -24,19 +24,19 @@ Run the CAT analysis with the following command:
 
 CAT12 segmentation batch:
 
-`singularity run --cleanenv container.simg cat_standalone_segment.txt T1.nii`
+`singularity run --cleanenv container.simg -b cat_standalone_segment.txt T1.nii`
 
 CAT12 simple processing batch:
 
-`singularity run --cleanenv container.simg cat_standalone_simple.txt T1.nii`
+`singularity run --cleanenv container.simg -b cat_standalone_simple.txt T1.nii`
 
 CAT12 resample & smooth batch:
 
-`singularity run --cleanenv container.simg cat_standalone_resample.txt "12" "1" lh.thickness.T1`
+`singularity run --cleanenv container.simg -b cat_standalone_resample.txt -a1 "12" -a2 "1" lh.thickness.T1`
 
 CAT12 volume smoothing batch:
 
-`singularity run --cleanenv container.simg cat_standalone_smooth.txt "[6 6 6]" "'s6'" T1.nii`
+`singularity run --cleanenv container.simg -b cat_standalone_smooth.txt -a1 "[6 6 6]" -a2 "'s6'" T1.nii`
 
 
 ## Known issues:

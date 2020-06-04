@@ -4,8 +4,7 @@ From:neurodebian:latest
 %setup
     mkdir -p ${SINGULARITY_ROOTFS}/downloads
     mkdir -p ${SINGULARITY_ROOTFS}/code
-    
-    install -m 755 ./code/main.sh ${SINGULARITY_ROOTFS}/code
+    mkdir -p ${SINGULARITY_ROOTFS}/batch
 
 %post
     apt-get update
@@ -30,6 +29,7 @@ From:neurodebian:latest
 
     # install CAT standalone interface
     install -m 755 /downloads/CAT/cat12/standalone/*.sh /code
+    install -m 644 /downloads/CAT/cat12/standalone/*.txt /batch
 
     # set permissions
     find /code -type f -print0 | xargs -0 chmod +r
@@ -45,7 +45,8 @@ From:neurodebian:latest
     export MCR_INHIBIT_CTF_LOCK=1
 
 %runscript
-    exec /code/main.sh "$@"
+    NOW=$(date +%s)
+    exec zrun /code/cat_standalone.sh "$@" > $PWD/cat_$NOW.log
 
 %help
 
@@ -70,16 +71,16 @@ singularity run --cleanenv <container> <batch file> <arguments>
 EXAMPLES:
 
 CAT12 segmentation batch:
-singularity run --cleanenv container.simg cat_standalone_segment.txt T1.nii
+singularity run --cleanenv container.simg -b cat_standalone_segment.txt T1.nii
 
 CAT12 simple processing batch:
-singularity run --cleanenv container.simg cat_standalone_simple.txt T1.nii
+singularity run --cleanenv container.simg -b cat_standalone_simple.txt T1.nii
 
 CAT12 resample & smooth batch:
-singularity run --cleanenv container.simg cat_standalone_resample.txt "12" "1" lh.thickness.T1
+singularity run --cleanenv container.simg -b cat_standalone_resample.txt -a1 "12" -a2 "1" lh.thickness.T1
 
 CAT12 volume smoothing batch:
-singularity run --cleanenv container.simg cat_standalone_smooth.txt "[6 6 6]" "'s6'" T1.nii
+singularity run --cleanenv container.simg -b cat_standalone_smooth.txt -a1 "[6 6 6]" -a2 "'s6'" T1.nii
 
 
 Known issues:
