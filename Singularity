@@ -1,5 +1,5 @@
-Bootstrap:docker
-From:neurodebian:latest
+Bootstrap: docker
+From: debian:buster-slim
 
 %setup
     mkdir -p ${SINGULARITY_ROOTFS}/downloads
@@ -46,7 +46,7 @@ From:neurodebian:latest
 
 %runscript
     NOW=$(date +%s)
-    exec zrun /code/cat_standalone.sh "$@" > $PWD/cat_$NOW.log
+    exec zrun /code/cat_standalone.sh "$@" > cat_$NOW.log
 
 %help
 
