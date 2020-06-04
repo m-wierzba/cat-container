@@ -20,6 +20,14 @@ Run the CAT analysis with the following command:
 
 `singularity run --cleanenv <container> <batch file> <arguments>`
 
+To use your own, customised batch file, simply specify its path:
+
+`singularity run --cleanenv container.simg -b /home/cat_standalone_segment.txt T1.nii`
+
+To use a default batch file, use one of the files included in the container (`/batch`):
+
+`singularity run --cleanenv container.simg -b /batch/cat_standalone_segment.txt T1.nii`
+
 ## Examples:
 
 CAT12 segmentation batch:
