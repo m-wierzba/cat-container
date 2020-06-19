@@ -28,6 +28,12 @@ To use a default batch file, use one of the files included in the container (`/b
 
 `singularity run --cleanenv container.simg -b /batch/cat_standalone_segment.txt T1.nii`
 
+Please note that most of the host files remain inaccessible from within the container. By default the following directories are mounted within the container: `$HOME`, `/tmp`, `/proc`, `/sys`, `/dev`, and `$PWD` (see the [Singularity documentation](https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html#system-defined-bind-paths) for more details). 
+
+If you want the container to be able to access other locations, specify a bind path of your choice. For instance, to make the contents of the `/data` folder on your computer available in the `/mnt` folder inside the container, specify the mount point in the following way:
+
+`singularity run --cleanenv --bind /data:/mnt container.simg -b /batch/cat_standalone_segment.txt /mnt/T1.nii`
+
 ## Examples:
 
 CAT12 segmentation batch:
