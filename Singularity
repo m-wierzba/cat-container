@@ -50,7 +50,7 @@ From: debian:buster-slim
     [ "$#" = 0 ] && exec /code/test "$@"
     
     NOW=$(date +%s)
-    exec zrun /code/cat_standalone.sh "$@" > cat_$NOW.log
+    exec zrun /code/cat_standalone.sh "$@" 2>&1 |tee cat_$NOW.log
 
 %help
 

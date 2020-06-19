@@ -4,7 +4,7 @@ if [ "$#" = 0 ]
 then
     cat << EOF
 
-Error: No arguments have been passed!
+ERROR: No arguments have been passed!
         
 Use the following command: 
 singularity run --cleanenv <container> <batch file> <arguments>
