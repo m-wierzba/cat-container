@@ -2,9 +2,11 @@ Bootstrap: docker
 From: debian:buster-slim
 
 %setup
-    mkdir -p ${SINGULARITY_ROOTFS}/downloads
-    mkdir -p ${SINGULARITY_ROOTFS}/code
     mkdir -p ${SINGULARITY_ROOTFS}/batch
+    mkdir -p ${SINGULARITY_ROOTFS}/code
+    mkdir -p ${SINGULARITY_ROOTFS}/downloads
+
+    install -m 755 ./code/* ${SINGULARITY_ROOTFS}/code
 
 %post
     apt-get update
@@ -45,6 +47,8 @@ From: debian:buster-slim
     export MCR_INHIBIT_CTF_LOCK=1
 
 %runscript
+    [ "$#" = 0 ] && exec /code/test "$@"
+    
     NOW=$(date +%s)
     exec zrun /code/cat_standalone.sh "$@" > cat_$NOW.log
 
