@@ -14,24 +14,24 @@ From: debian:buster-slim
 
     # download software
     MCRURL="https://ssd.mathworks.com/supportfiles/downloads/R2017b/deployment_files/R2017b/installers/glnxa64/MCR_R2017b_glnxa64_installer.zip"
-    SPMURL="https://upload.uni-jena.de/data/5eb56ac0672962.94160102/Archiv.zip"
-    CATURL="http://www.neuro.uni-jena.de/cat12/cat12_latest.zip"
+    SPMURL="http://www.neuro.uni-jena.de/cat12/cat12_latest_R2017b_MCR_Linux.zip"
 
     cd /downloads
     wget "${MCRURL}" && unzip -d /downloads/MCR MCR_R2017b_glnxa64_installer.zip
-    wget "${SPMURL}" && unzip -d /code/SPM Archiv.zip
-    wget "${CATURL}" && unzip -d /downloads/CAT cat12_latest.zip
+    wget "${SPMURL}" && unzip -d /code/SPM cat12_latest_R2017b_MCR_Linux.zip
 
     # install MCR
     /downloads/MCR/install -mode silent -agreeToLicense yes
 
     # install SPM
-    /code/SPM/run_spm12.sh /usr/local/MATLAB/MATLAB_Runtime/v93 quit
-    cd /code/SPM && chmod +rx run_spm12.sh spm12.sh spm12
+    /code/SPM/MCR_Linux/run_spm12.sh /usr/local/MATLAB/MATLAB_Runtime/v93 quit
+    cd /code/SPM/MCR_Linux && chmod +rx run_spm12.sh spm12.sh spm12
 
     # install CAT standalone interface
-    install -m 755 /downloads/CAT/cat12/standalone/*.sh /code
-    install -m 644 /downloads/CAT/cat12/standalone/*.txt /batch
+    STANDALONE="/code/SPM/MCR_Linux/spm12_mcr/home/gaser/gaser/spm/spm12/toolbox/cat12/standalone"
+    cd ${STANDALONE} && chmod +rx *.sh
+    cd /code && ln -s ${STANDALONE}/*.sh .
+    cd /batch && ln -s ${STANDALONE}/*.txt .
 
     # set permissions
     find /code -type f -print0 | xargs -0 chmod +r
@@ -42,7 +42,7 @@ From: debian:buster-slim
     apt-get autoremove
 
 %environment
-    export SPMROOT=/code/SPM
+    export SPMROOT=/code/SPM/MCR_Linux
     export MCRROOT=/usr/local/MATLAB/MATLAB_Runtime/v93
     export MCR_INHIBIT_CTF_LOCK=1
 
@@ -63,9 +63,8 @@ The container includes:
 
 - MATLAB Compiler Runtime (R2017b, 9.3) 
 - Standalone version of SPM software (SPM12, r7771) 
-- Computational Anatomy Toolbox (CAT12.7-Beta, r1613)
-- Interface scripts (cat_standalone.sh, cat_parallelize.sh),
-  included in the official distribution of CAT.
+- Computational Anatomy Toolbox (CAT12.7-RC1 r1658)
+- CAT interface scripts (cat_standalone.sh, cat_parallelize.sh).
 
 For more details on the exact version of the software used in this
 container, please refer to the README file.
@@ -135,7 +134,9 @@ singularity run --cleanenv container.simg \
 
 
 Known issues:
-- Parallelization with cat_parallelize.sh is not implemented yet.
+- Parallelization with 'cat_parallelize.sh' is not implemented yet.
+- Longitudinal segmentation with 'cat_standalone_segment_long.txt' 
+  is not tested yet.
 
 
 Contact information:
