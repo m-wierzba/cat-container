@@ -82,7 +82,7 @@ refer to the CAT12 documentation and manual.
 -- Available batch files --
 
 The content of the batch files can be explored by using the 'view' and
-'copy' subcommands.
+'copy' subcommands:
 
 singularity run <container> <subcommand> <batch file> <arguments>
 
@@ -95,8 +95,9 @@ specify destination path as an additional argument:
 
 singularity run container.simg copy cat_standalone_smooth.txt $HOME
 
-Make sure that the specified path is mounted to the container and that
-you have write access to this path!
+Make sure that the specified path is mounted to the container (more
+information on this can be found below) and that you have write access
+to this path!
 
 To copy all available batch files, use the 'all' argument:
 
@@ -118,6 +119,9 @@ To use your own, customised batch file, simply specify its path:
 singularity run --cleanenv container.simg \
 	-b $HOME/cat_standalone_segment.txt \
 	T1.nii
+
+
+-- Bind paths --
 
 Please note that most of the host files remain inaccessible from within
 the container. By default the following directories are mounted within
