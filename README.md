@@ -10,23 +10,45 @@ The container includes:
 - [Computational Anatomy Toolbox](http://www.neuro.uni-jena.de/cat/) (CAT12.7-RC1 r1658)
 - CAT interface scripts (`cat_standalone.sh`, `cat_parallelize.sh`).
 
-For more details on the exact version of the software used in this container, please refer to the [recipe file](https://github.com/m-wierzba/cat-container/blob/master/Singularity).
+For more details on the exact version of the software used in this container, please refer to the recipe file.
 
 ## How to use:
 
-In principle this container allows you to perform the very same types of analysis that are possible with the standalone version of CAT. It is assumed that the user is familiar with the content of the [batch files](https://github.com/m-wierzba/cat-container/tree/master/batch) dedicated for the use with the standalone version of CAT (`cat_standalone_segment.txt`, `cat_standalone_simple.txt`, `cat_standalone_resample.txt`, `cat_standalone_smooth.txt`) and can modify their content according to his/her needs. For more details, please refer to the [CAT12 documentation and manual](http://www.neuro.uni-jena.de/cat12/CAT12-Manual.pdf).
+In principle this container allows you to perform the very same types of analysis that are possible with the standalone version of CAT. It is assumed that the user is familiar with the content of the batch files dedicated for the use with the standalone version of CAT (`cat_standalone_segment.txt`, `cat_standalone_simple.txt`, `cat_standalone_resample.txt`, `cat_standalone_smooth.txt`) and can modify their content according to his/her needs. For more details, please refer to the [CAT12 documentation and manual](http://www.neuro.uni-jena.de/cat12/CAT12-Manual.pdf).
+
+## Available batch files
+
+The content of the batch files can be explored by using the `view` and `copy` subcommands.
+
+`singularity run <container> <subcommand> <batch file> <arguments>`
+
+To view a batch file, use the `view` subcommand:
+
+`singularity run container.simg view cat_standalone_smooth.txt`
+
+To copy a batch file to your computer, use the `copy` subcommand and specify destination path as an additional argument:
+
+`singularity run container.simg copy cat_standalone_smooth.txt $HOME/batches/`
+
+Make sure that the specified path is mounted to the container and that you have write access to this path!
+
+To copy all available batch files, use the `all` argument:
+
+`singularity run container.simg copy all $HOME/batches/`
+
+## Running CAT
 
 Run the CAT analysis with the following command:
 
 `singularity run --cleanenv <container> <batch file> <arguments>`
 
-To use your own, customised batch file, simply specify its path, for instance:
-
-`singularity run --cleanenv container.simg -b $HOME/cat_standalone_segment.txt T1.nii`
-
 To use a default batch file, use one of the files included in the container (`/batch`), for instance:
 
 `singularity run --cleanenv container.simg -b /batch/cat_standalone_segment.txt T1.nii`
+
+To use your own, customised batch file, simply specify its path, for instance:
+
+`singularity run --cleanenv container.simg -b $HOME/cat_standalone_segment.txt T1.nii`
 
 Please note that most of the host files remain inaccessible from within the container. By default the following directories are mounted within the container: `$HOME`, `/tmp`, `/proc`, `/sys`, `/dev`, and `$PWD` (see the [Singularity documentation](https://sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html#system-defined-bind-paths) for more details). 
 
@@ -56,7 +78,7 @@ CAT12 volume smoothing batch:
 ## Known issues:
 
 * Parallelization with `cat_parallelize.sh` is not implemented yet.
-* Longitudinal segmentation with 'cat_standalone_segment_long.txt' is not tested yet.
+* Longitudinal segmentation with `cat_standalone_segment_long.txt` is not tested yet.
 
 
 ## Contact information:

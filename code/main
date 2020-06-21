@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Help
+
+if [ "$#" = 0 ]
+then
+    echo "ERROR: No arguments passed."
+    cat /.singularity.d/runscript.help
+    exit 1
+fi
+
+# Copy or view batch files
+
+STANDALONE="/code/SPM/MCR_Linux/spm12_mcr/home/gaser/gaser/spm/spm12/toolbox/cat12/standalone"
+
+if [ "$1" = "copy" ]
+then
+    if [ "$2" = "all" ]
+    then
+	echo "Copying batch files to:"
+	cp -vi ${STANDALONE}/*.txt "$3"
+	exit 0
+    elif [ -f ${STANDALONE}/"$2" ]
+    then
+	echo "Copying batch file to:"    
+	cp -vi ${STANDALONE}/"$2" "$3"
+	exit 0
+    else
+	echo "ERROR: batch file $2 not found. Available batch files are:"
+	find ${STANDALONE} -name "*.txt" -printf "%f\n"
+	exit 1
+    fi
+elif [ "$1" = "view" ]
+then
+    if [ -f ${STANDALONE}/"$2" ]
+    then
+	cat ${STANDALONE}/"$2"
+	exit 0
+    else
+        echo "ERROR: batch file $2 not found. Available batch files are:"
+        find ${STANDALONE} -name "*.txt" -printf "%f\n"
+        exit 1
+    fi
+fi
+
+# Run CAT
+
+NOW=$(date +%s)
+exec zrun /code/cat_standalone.sh "$@" 2>&1 |tee cat_$NOW.log

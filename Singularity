@@ -47,10 +47,7 @@ From: debian:buster-slim
     export MCR_INHIBIT_CTF_LOCK=1
 
 %runscript
-    [ "$#" = 0 ] && exec /code/test "$@"
-    
-    NOW=$(date +%s)
-    exec zrun /code/cat_standalone.sh "$@" 2>&1 |tee cat_$NOW.log
+    exec /code/main "$@"
 
 %help
 
@@ -69,6 +66,7 @@ The container includes:
 For more details on the exact version of the software used in this
 container, please refer to the README file.
 
+
 HOW TO USE:
 
 In principle this container allows you to perform the very same types
@@ -80,18 +78,45 @@ cat_standalone_resample.txt, cat_standalone_smooth.txt) and can modify
 their content according to his/her needs. For more details, please
 refer to the CAT12 documentation and manual.
 
+
+-- Available batch files --
+
+The content of the batch files can be explored by using the 'view' and
+'copy' subcommands.
+
+singularity run <container> <subcommand> <batch file> <arguments>
+
+To view a batch file, use the 'view' subcommand:
+
+singularity run container.simg view cat_standalone_smooth.txt
+
+To copy a batch file to your computer, use the 'copy' subcommand and
+specify destination path as an additional argument:
+
+singularity run container.simg copy cat_standalone_smooth.txt $HOME
+
+Make sure that the specified path is mounted to the container and that
+you have write access to this path!
+
+To copy all available batch files, use the 'all' argument:
+
+singularity run container.simg copy all $HOME
+
+
+-- Running CAT --
+
 Run the CAT analysis with the following command: 
 singularity run --cleanenv <container> <batch file> <arguments>
-
-To use your own, customised batch file, simply specify its path:
-singularity run --cleanenv container.simg \
-	-b $HOME/cat_standalone_segment.txt \
-	T1.nii
 
 To use a default batch file, use one of the files included in the
 container ('/batch'): 
 singularity run --cleanenv container.simg \
 	-b /batch/cat_standalone_segment.txt \
+	T1.nii
+
+To use your own, customised batch file, simply specify its path:
+singularity run --cleanenv container.simg \
+	-b $HOME/cat_standalone_segment.txt \
 	T1.nii
 
 Please note that most of the host files remain inaccessible from within
@@ -107,6 +132,7 @@ inside the container, specify the mount point in the following way:
 singularity run --cleanenv --bind /data:/mnt container.simg \
 	-b /batch/cat_standalone_segment.txt \
 	/mnt/T1.nii
+
 
 EXAMPLES:
 
@@ -134,8 +160,9 @@ singularity run --cleanenv container.simg \
 
 
 Known issues:
-- Parallelization with 'cat_parallelize.sh' is not implemented yet.
-- Longitudinal segmentation with 'cat_standalone_segment_long.txt' 
+
+- Parallelization with cat_parallelize.sh is not implemented yet.
+- Longitudinal segmentation with cat_standalone_segment_long.txt 
   is not tested yet.
 
 
