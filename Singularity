@@ -35,7 +35,8 @@ From: debian:buster-slim
 
     # set permissions
     find /code -type f -print0 | xargs -0 chmod +r
-    
+    find /code/SPM/MCR_Linux/spm12_mcr/home/gaser/gaser/spm/spm12/toolbox/cat12/CAT.glnx86 -type f -print0 | xargs -0 chmod +rx
+ 
     rm -fr /downloads
 
     apt-get clean
