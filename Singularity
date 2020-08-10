@@ -50,6 +50,10 @@ From: debian:buster-slim
 %runscript
     exec /code/main "$@"
 
+%labels
+    Author Malgorzata Wierzba (m.wierzba@fz-juelich.de)
+    Version 1.0.0
+
 %help
 
 This container allows to run the standalone, compiled version of the
