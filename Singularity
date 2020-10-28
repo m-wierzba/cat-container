@@ -52,7 +52,7 @@ From: debian:buster-slim
 
 %labels
     Author Malgorzata Wierzba (m.wierzba@fz-juelich.de)
-    Version 1.0.0
+    Version 1.0.1
 
 %help
 
