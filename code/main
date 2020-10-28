@@ -46,4 +46,4 @@ fi
 # Run CAT
 
 NOW=$(date +%s)
-exec zrun /code/cat_standalone.sh "$@" 2>&1 |tee cat_$NOW.log
+exec /code/cat_standalone.sh "$@" 2>&1 |tee cat_$NOW.log
