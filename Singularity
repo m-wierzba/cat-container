@@ -65,7 +65,7 @@ The container includes:
 
 - MATLAB Compiler Runtime (R2017b, 9.3) 
 - Standalone version of SPM software (SPM12, r7771) 
-- Computational Anatomy Toolbox (CAT12.7-RC1 r1658)
+- Computational Anatomy Toolbox (CAT12.7-RC2 r1720)
 - CAT interface scripts (cat_standalone.sh, cat_parallelize.sh).
 
 For more details on the exact version of the software used in this
