@@ -14,11 +14,12 @@ From: debian:buster-slim
 
     # download software
     MCRURL="https://ssd.mathworks.com/supportfiles/downloads/R2017b/deployment_files/R2017b/installers/glnxa64/MCR_R2017b_glnxa64_installer.zip"
-    SPMURL="http://www.neuro.uni-jena.de/cat12/cat12_latest_R2017b_MCR_Linux.zip"
+    SPMURL="http://www.neuro.uni-jena.de/cat12/CAT12.7_r1743_R2017b_MCR_Linux.zip"
 
     cd /downloads
     wget "${MCRURL}" && unzip -d /downloads/MCR MCR_R2017b_glnxa64_installer.zip
-    wget "${SPMURL}" && unzip -d /code/SPM cat12_latest_R2017b_MCR_Linux.zip
+    wget "${SPMURL}" && unzip -d /code/SPM CAT12.7_r1743_R2017b_MCR_Linux.zip
+    mv /code/SPM/CAT12.7_r1743_R2017b_MCR_Linux /code/SPM/MCR_Linux/
 
     # install MCR
     /downloads/MCR/install -mode silent -agreeToLicense yes
@@ -36,7 +37,7 @@ From: debian:buster-slim
     # set permissions
     find /code -type f -print0 | xargs -0 chmod +r
     find /code/SPM/MCR_Linux/spm12_mcr/home/gaser/gaser/spm/spm12/toolbox/cat12/CAT.glnx86 -type f -print0 | xargs -0 chmod +rx
- 
+
     rm -fr /downloads
 
     apt-get clean
@@ -63,9 +64,9 @@ MATLAB licence.
 
 The container includes:
 
-- MATLAB Compiler Runtime (R2017b, 9.3) 
-- Standalone version of SPM software (SPM12, r7771) 
-- Computational Anatomy Toolbox (CAT12.7-RC2 r1720)
+- MATLAB Compiler Runtime (R2017b, 9.3)
+- Standalone version of SPM software (SPM12, r7771)
+- Computational Anatomy Toolbox (CAT12.7 r1743)
 - CAT interface scripts (cat_standalone.sh, cat_parallelize.sh).
 
 For more details on the exact version of the software used in this
@@ -111,11 +112,11 @@ singularity run container.simg copy all $HOME
 
 -- Running CAT --
 
-Run the CAT analysis with the following command: 
+Run the CAT analysis with the following command:
 singularity run --cleanenv <container> <batch file> <arguments>
 
 To use a default batch file, use one of the files included in the
-container ('/batch'): 
+container ('/batch'):
 singularity run --cleanenv container.simg \
 	-b /batch/cat_standalone_segment.txt \
 	T1.nii
@@ -145,23 +146,23 @@ singularity run --cleanenv --bind /data:/mnt container.simg \
 
 EXAMPLES:
 
-CAT12 segmentation batch: 
+CAT12 segmentation batch:
 singularity run --cleanenv container.simg \
 	-b cat_standalone_segment.txt \
 	T1.nii
 
-CAT12 simple processing batch: 
+CAT12 simple processing batch:
 singularity run --cleanenv container.simg \
 	-b cat_standalone_simple.txt \
 	T1.nii
 
-CAT12 resample & smooth batch: 
+CAT12 resample & smooth batch:
 singularity run --cleanenv container.simg \
 	-b cat_standalone_resample.txt \
 	-a1 "12" -a2 "1" \
 	lh.thickness.T1
 
-CAT12 volume smoothing batch: 
+CAT12 volume smoothing batch:
 singularity run --cleanenv container.simg \
 	-b cat_standalone_smooth.txt \
 	-a1 "[6 6 6]" -a2 "'s6'" \
@@ -171,7 +172,7 @@ singularity run --cleanenv container.simg \
 Known issues:
 
 - Parallelization with cat_parallelize.sh is not implemented yet.
-- Longitudinal segmentation with cat_standalone_segment_long.txt 
+- Longitudinal segmentation with cat_standalone_segment_long.txt
   is not tested yet.
 
 

@@ -6,10 +6,15 @@ The container includes:
 
 - [MATLAB Compiler Runtime](https://uk.mathworks.com/products/compiler/matlab-runtime.html) (R2017b, 9.3)
 - Standalone version of [SPM](https://www.fil.ion.ucl.ac.uk/spm/software/) software (SPM12, r7771)
-- [Computational Anatomy Toolbox](http://www.neuro.uni-jena.de/cat/) (CAT12.7-RC2 r1720)
+- [Computational Anatomy Toolbox](http://www.neuro.uni-jena.de/cat/) (CAT12.7 r1743)
 - CAT interface scripts (`cat_standalone.sh`, `cat_parallelize.sh`).
 
 For more details on the exact version of the software used in this container, please refer to the recipe file.
+
+## How to build the singularity container:
+
+Execute the built command with root privileges (sudo)
+`singularity build cat-r1743.simg Singularity`
 
 ## How to use:
 
