@@ -11,10 +11,11 @@ The container includes:
 
 For more details on the exact version of the software used in this container, please refer to the recipe file.
 
-## How to build the singularity container:
+## How to build the container:
 
-Execute the built command with root privileges (sudo)
-`singularity build cat-r1743.simg Singularity`
+Execute the built command with root privileges:
+
+`sudo singularity build container.simg Singularity`
 
 ## How to use:
 
